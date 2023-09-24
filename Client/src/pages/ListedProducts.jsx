@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import Products from "../components/Products";
 import Footer from "../components/Footer";
 import { mobile } from "../pages/responser";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -36,45 +38,17 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ListedProducts = () => {
+  const location = useLocation();
+  const cat = location.pathname.split("/")[2];
+
   return (
     <Container>
       <Navbar />
-      <Title>All Products</Title>
+      <Title>{cat}</Title>
       <FilterDiv>
-        <Filter>
-          <FilterText>Sort Based:</FilterText>
-          <Select>
-            <Option value="newest">Newest</Option>
-            <Option value="priceAsc">Price (asc)</Option>
-            <Option value="priceDesc">Price (desc)</Option>
-          </Select>
-        </Filter>
-        <Filter>
-          <FilterText>Filter Products:</FilterText>
-          <Select>
-            <Option value="" disabled selected>
-              Color
-            </Option>
-            <Option value="white">White</Option>
-            <Option value="black">Black</Option>
-            <Option value="red">Red</Option>
-            <Option value="blue">Blue</Option>
-            <Option value="yellow">Yellow</Option>
-            <Option value="green">Green</Option>
-          </Select>
-          <Select>
-            <Option value="" disabled selected>
-              Size
-            </Option>
-            <Option value="xs">XS</Option>
-            <Option value="s">S</Option>
-            <Option value="m">M</Option>
-            <Option value="l">L</Option>
-            <Option value="xl">XL</Option>
-          </Select>
-        </Filter>
+        <Filter></Filter>
       </FilterDiv>
-      <Products />
+      <Products cat={cat} />
       <Footer />
     </Container>
   );

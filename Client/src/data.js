@@ -2,17 +2,32 @@ export const categories = [
   {
     id: 1,
     img: "https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-an-interior-with-potted-plants-and-pictures-in-frames.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    title: "Skin Care",
+    title: "Moisturiser Care",
+    cat: "Moisturiser",
   },
   {
     id: 2,
     img: "https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-an-interior-with-potted-plants-and-pictures-in-frames.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    title: "Hair Care",
+    title: "Face Care",
+    cat: "Facewash",
   },
   {
     id: 3,
     img: "https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-an-interior-with-potted-plants-and-pictures-in-frames.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    title: "Body Care",
+    cat: "Body Care",
+  },
+  {
+    id: 1,
+    img: "https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-an-interior-with-potted-plants-and-pictures-in-frames.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     title: "Skin Care",
+    cat: "Skin",
+  },
+  {
+    id: 2,
+    img: "https://images.pexels.com/photos/18005100/pexels-photo-18005100/free-photo-of-an-interior-with-potted-plants-and-pictures-in-frames.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    title: "Lips Care",
+    cat: "Lips",
   },
 ];
 
