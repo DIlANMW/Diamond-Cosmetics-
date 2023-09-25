@@ -1,6 +1,7 @@
 import { BsSearch, BsBag } from "react-icons/bs";
 import { GrFavorite } from "react-icons/gr";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Tag = styled.div`
   opacity: 0;
@@ -63,7 +64,9 @@ const Product = ({ item }) => {
       <Image src={item.img} />
       <Tag>
         <Icon>
-          <BsSearch />
+          <Link to={`product/${item._id}`}>
+            <BsSearch />
+          </Link>
         </Icon>
         <Icon>
           <GrFavorite />

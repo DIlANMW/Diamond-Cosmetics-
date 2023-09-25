@@ -3,9 +3,10 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "./responser";
 import { BsDashCircle, BsPlusCircle } from "react-icons/bs";
-
-BsDashCircle;
-BsPlusCircle;
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { normalAxioRequest } from "../axiosRequests";
+import axios from "axios";
 
 const Container = styled.div``;
 
@@ -108,36 +109,52 @@ const Button = styled.button`
 `;
 
 const DetailedProduct = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      const res = await normalAxioRequest.get("/products/find/" + id);
+      setProduct(res.data);
+    };
+    getProduct();
+  }, []);
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
   return (
     <Container>
       <Navbar />
 
       <Wrapper>
         <ImgContainer>
-          <Image src="./images/cosmetics.png" />
+          <Image src={product.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
-          <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
-          </Desc>
-          <Price>$ 20</Price>
+          <Title>{product.title}</Title>
+          <Desc>{product.desc}</Desc>
+          <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
-              <FilterTitle>Usage:</FilterTitle>
+              <FilterTitle>Usage:{product.directions}</FilterTitle>
             </Filter>
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <BsDashCircle />
-              <Amount>1</Amount>
-              <BsPlusCircle />
+              <BsDashCircle onClick={() => handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <BsPlusCircle onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button>Add to Cart</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

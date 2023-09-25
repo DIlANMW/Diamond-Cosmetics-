@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { latestProducts } from "../data";
 import Product from "./Product";
 import axios from "axios";
 
@@ -22,7 +21,6 @@ const Products = ({ cat }) => {
           : "http://localhost:3000/api/products"
       );
       setProducts(res.data);
-      console.log(products);
     };
     getProducts();
   }, [cat]);
