@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { BsSearch, BsBag } from "react-icons/bs";
 import { mobile } from "../pages/responser";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -70,11 +72,13 @@ const Input = styled.input`
 `;
 
 const Navbar = () => {
+  const quantity = useSelector((state) => state.cart.quantity);
+
   return (
     <Container>
       <Wrapper>
         <Left>
-          <Logo>Diamond</Logo>
+          <Logo>Shopy</Logo>
         </Left>
         <Center>
           <Search>
@@ -86,8 +90,10 @@ const Navbar = () => {
           <Menu>Register</Menu>
           <Menu>Sign in</Menu>
           <Menu>
-            <BsBag style={{ color: "gray", fontSize: 20 }} />
-            <Badge>4</Badge>
+            <Link to="/cart">
+              <BsBag style={{ color: "gray", fontSize: 20 }} />
+              <Badge>{quantity}</Badge>
+            </Link>
           </Menu>
         </Right>
       </Wrapper>

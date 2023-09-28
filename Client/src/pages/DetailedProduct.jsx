@@ -6,7 +6,8 @@ import { BsDashCircle, BsPlusCircle } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { normalAxioRequest } from "../axiosRequests";
-import axios from "axios";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div``;
 
@@ -111,7 +112,7 @@ const Button = styled.button`
 const DetailedProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-
+  const dispatch = useDispatch();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
 
@@ -129,6 +130,12 @@ const DetailedProduct = () => {
     } else {
       setQuantity(quantity + 1);
     }
+  };
+
+  const handleClick = () => {
+    dispatch(
+      addProduct({ product, quantity, price: product.price * quantity })
+    );
   };
 
   return (
@@ -154,7 +161,7 @@ const DetailedProduct = () => {
               <Amount>{quantity}</Amount>
               <BsPlusCircle onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>Add to Cart</Button>
+            <Button onClick={handleClick}>Add to Cart</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

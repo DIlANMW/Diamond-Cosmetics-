@@ -1,10 +1,18 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { login } from "../redux/apiCalls";
 import { mobile } from "./responser";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: #fafbfc;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+      center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -14,17 +22,15 @@ const Container = styled.div`
 const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: white;
   ${mobile({ width: "75%" })}
 `;
 
 const Title = styled.h1`
-  text-align: center;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 300;
 `;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -40,37 +46,62 @@ const Input = styled.input`
 const Button = styled.button`
   width: 40%;
   border: none;
-  padding: 20px 30px;
-  border-radius: 10px;
-  background-color: royalblue;
+  padding: 15px 20px;
+  background-color: teal;
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
 `;
 
 const Link = styled.a`
-  color: gray;
   margin: 5px 0px;
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
 `;
 
-const SignIn = () => {
+const Error = styled.span`
+  color: red;
+`;
+
+const Signin = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    login(dispatch, { username, password });
+  };
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input type="text" placeholder="Username" />
-          <Input type="password" placeholder="Password" />
-          <Button type="submit">Sign In</Button>
-          <Link>Forgot your password?</Link>
-          <Link>Create New Account</Link>
+          <Input
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            placeholder="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={handleClick} disabled={isFetching}>
+            LOGIN
+          </Button>
+          {error && <Error>Something went wrong...</Error>}
+          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+          <Link>CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
     </Container>
   );
 };
 
-export default SignIn;
+export default Signin;

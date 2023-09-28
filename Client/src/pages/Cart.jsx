@@ -4,6 +4,7 @@ import { BsDashCircle, BsPlusCircle } from "react-icons/bs";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "./responser";
+import { useSelector } from "react-redux";
 
 const Container = styled.div``;
 
@@ -59,6 +60,11 @@ const ProductName = styled.h2`
 const ProductDescription = styled.p`
   color: #777;
   margin: 5px 0;
+  font-size: 15px;
+`;
+const ProductId = styled.p`
+  color: #292929;
+  margin: 5px 0;
 `;
 
 const ProductPrice = styled.div`
@@ -69,14 +75,7 @@ const ProductPrice = styled.div`
 const QuantityContainer = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const QuantityButton = styled.button`
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 20px;
-  margin: 0 10px;
+  margin-right: 60px;
 `;
 
 const Quantity = styled.span`
@@ -90,12 +89,7 @@ const RemoveButton = styled.button`
   cursor: pointer;
   font-weight: 600;
   font-size: 18px;
-  margin-left: 5px;
-`;
-
-const Subtotal = styled.div`
-  font-size: 20px;
-  font-weight: 600;
+  margin-right: 20px;
 `;
 
 const Total = styled.div`
@@ -120,38 +114,33 @@ const CheckoutButton = styled.button`
 `;
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
+  console.log(cart.products);
   return (
     <Container>
       <Navbar />
+      <Title>Your Cart</Title>
+
       <Wrapper>
-        <Title>Your Cart</Title>
-        <CartItem>
-          <ProductImage
-            src="https://image.similarpng.com/very-thumbnail/2020/08/Natural-Cosmetic-cream-product-ad-Clipart-PNG.png"
-            alt="Product"
-          />
-          <ProductInfo>
-            <ProductName>Rose Cream</ProductName>
-            <ProductDescription>
-              Product description goes here.
-            </ProductDescription>
-            <ProductPrice>$50</ProductPrice>
-          </ProductInfo>
-          <QuantityContainer>
-            <QuantityButton>
-              <BsDashCircle />
-            </QuantityButton>
-            <Quantity>2</Quantity>
-            <QuantityButton>
-              <BsPlusCircle />
-            </QuantityButton>
-          </QuantityContainer>
-          <Subtotal>$50</Subtotal>
-          <RemoveButton>Remove</RemoveButton>
-        </CartItem>
-        <Total>Total: $50</Total>
+        {cart.products.map((product) => (
+          <CartItem>
+            <ProductImage src={product.product.img} alt="Product" />
+            <ProductInfo>
+              <ProductName>{product.product.title}</ProductName>
+              <ProductId>Id:{product.product._id}</ProductId>
+              <ProductDescription>{product.product.desc}</ProductDescription>
+              <ProductPrice>${product.price}</ProductPrice>
+            </ProductInfo>
+            <QuantityContainer>
+              <Quantity>Quantity: {product.quantity}</Quantity>
+            </QuantityContainer>
+            <RemoveButton>Remove</RemoveButton>
+          </CartItem>
+        ))}
+        <Total>Total: ${cart.total}</Total>
         <CheckoutButton>Checkout Now</CheckoutButton>
       </Wrapper>
+
       <Footer />
     </Container>
   );
